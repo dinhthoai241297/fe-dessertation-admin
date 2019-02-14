@@ -13,6 +13,7 @@ import StatusReducer from './StatusReducer';
 import DifReducer from './DifReducer';
 import NewReducer from './NewReducer';
 import MediaReducer from './MediaReducer';
+import JobReducer from './JobReducer';
 
 const root = combineReducers({
     SectorReducer,
@@ -28,7 +29,8 @@ const root = combineReducers({
     StatusReducer,
     DifReducer,
     NewReducer,
-    MediaReducer
+    MediaReducer,
+    JobReducer
 });
 
 export default root;

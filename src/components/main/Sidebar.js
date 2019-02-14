@@ -471,6 +471,44 @@ class Sidebar extends Component {
                                 </ul>
                             }
                         </MyLink>
+                        <MyLink
+                            to="/job"
+                            activeOnlyWhenExact={false}
+                            nativeClass="treeview"
+                            label={
+                                <Fragment>
+                                    <i className="fa fa-navicon" /> <span>Job</span>
+                                    <span className="pull-right-container">
+                                        <i className="fa fa-angle-left pull-right" />
+                                    </span>
+                                </Fragment>
+                            }
+                        >
+                            {
+                                <ul className="treeview-menu">
+                                    <MyLink
+                                        to="/job/list"
+                                        activeOnlyWhenExact={true}
+                                        label={
+                                            <Fragment>
+                                                <i className="fa fa-circle-o"></i> List Job
+                                            </Fragment>
+                                        }
+                                    />
+                                    {add &&
+                                        <MyLink
+                                            to="/job/add"
+                                            activeOnlyWhenExact={true}
+                                            label={
+                                                <Fragment>
+                                                    <i className="fa fa-circle-o"></i> Add Job
+                                            </Fragment>
+                                            }
+                                        />
+                                    }
+                                </ul>
+                            }
+                        </MyLink>
                     </ul>
                     {/* /.sidebar-menu */}
                 </section>

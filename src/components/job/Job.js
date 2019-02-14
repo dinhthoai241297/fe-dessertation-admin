@@ -1,22 +1,22 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import * as actions from './../../actions/NewActions';
+import * as actions from './../../actions/JobActions';
 import toastr from 'toastr';
 import { toastrOption, selectStyle } from './../../custom/Custom';
 import { findRole } from './../../custom/CusFunction';
 import * as roles from './../../contants/roles';
 import Select from 'react-select';
 import * as qs from 'query-string';
-import NewItem from './NewItem';
+import JobItem from './JobItem';
 
-class New extends Component {
+class Job extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
             page: 1,
             next: true,
-            news: [],
+            jobs: [],
             update: false,
             delete: false,
             statusSelectedOption: undefined,
@@ -30,22 +30,22 @@ class New extends Component {
     async componentDidMount() {
         await this.initStatusOptions(this.props);
         await this.initFilter(qs.parse(this.props.location.search));
-        this.loadNews();
+        this.loadJobs();
     }
 
     async componentWillReceiveProps(nextProps) {
         if (nextProps.location !== this.props.location) {
             await this.initFilter(qs.parse(nextProps.location.search));
-            this.loadNews();
+            this.loadJobs();
         }
         if (this.props.status !== nextProps.status) {
             await this.initStatusOptions(nextProps);
             this.initSelectedOption();
         }
-        let { news, next } = nextProps.data;
+        let { jobs, next } = nextProps.data;
         let { user } = nextProps;
         let update = findRole(user.role, roles.UPDATE) !== -1, del = findRole(user.role, roles.DELETE) !== -1;
-        this.setState({ news, next, update, delete: del });
+        this.setState({ jobs, next, update, delete: del });
     }
 
     initFilter = filter => {
@@ -90,13 +90,13 @@ class New extends Component {
     }
 
     genListNew = () => {
-        let rs = null, { news } = this.state;
-        if (news) {
-            rs = news.map((myNew, index) => {
+        let rs = null, { jobs } = this.state;
+        if (jobs) {
+            rs = jobs.map((job, index) => {
                 return (
-                    <NewItem
+                    <JobItem
                         key={index}
-                        myNew={myNew}
+                        job={job}
                         updateStatus={this.updateStatus}
                         update={this.state.update}
                         delete={this.state.delete}
@@ -113,17 +113,17 @@ class New extends Component {
             if (st) {
                 this.props.updateStatus(id, st).then(code => {
                     if (code === 200) {
-                        this.loadNews();
+                        this.loadJobs();
                     }
                 });
             }
         }
     }
 
-    loadNews = () => {
+    loadJobs = () => {
         this.setState({ loading: true });
         let { statusFilter, page } = this.state;
-        this.props.loadNews(page, statusFilter).then(res => {
+        this.props.loadJobs(page, statusFilter).then(res => {
             this.setState({ loading: false });
         });
     }
@@ -143,10 +143,10 @@ class New extends Component {
                 {/* Content Header (Page header) */}
                 <section className="content-header">
                     <h1>
-                        Trang Quản Lý Bài viết
+                        Trang Quản Lý Nghề
                     </h1>
                     <ol className="breadcrumb">
-                        <li><a href="#"><i className="fa fa-dashboard" /> New</a></li>
+                        <li><a href="#"><i className="fa fa-dashboard" /> Job</a></li>
                         <li className="active">List</li>
                     </ol>
                 </section>
@@ -158,7 +158,7 @@ class New extends Component {
                                 <div className="box-header">
                                     <div className="row">
                                         <div className="col-xs-12 col-lg-4 lh-35">
-                                            <h3 className="box-title">Danh sách bài viết</h3>
+                                            <h3 className="box-title">Danh sách nghề</h3>
                                         </div>
                                         <div className="col-xs-12 col-lg-8">
                                             <div className="row">
@@ -183,7 +183,7 @@ class New extends Component {
                                     <table className="table table-hover">
                                         <tbody>
                                             <tr>
-                                                <th>Bài viết</th>
+                                                <th>Nghề</th>
                                                 <th>Mô tả</th>
                                                 {(this.state.delete || this.state.update) &&
                                                     <th className="text-center">Action</th>
@@ -220,7 +220,7 @@ class New extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        data: state.NewReducer,
+        data: state.JobReducer,
         user: state.LoginReducer.user,
         status: state.StatusReducer.status
     }
@@ -228,9 +228,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch, props) => {
     return {
-        loadNews: (page, statusFilter) => dispatch(actions.loadAllNewApi(page, statusFilter)),
+        loadJobs: (page, statusFilter) => dispatch(actions.loadAllJobApi(page, statusFilter)),
         updateStatus: (id, status) => dispatch(actions.updateStatusApi(id, status))
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(New);
+export default connect(mapStateToProps, mapDispatchToProps)(Job);
