@@ -28,7 +28,7 @@ class Sidebar extends Component {
                     {/* Sidebar user panel (optional) */}
                     <div className="user-panel">
                         <div className="pull-left image">
-                            <img src="https://almsaeedstudio.com/themes/AdminLTE/dist/img/user2-160x160.jpg" className="img-circle" alt="User Image" />
+                            <img src="/static/images/admin.png" className="img-circle" alt="User Image" />
                         </div>
                         <div className="pull-left info">
                             <p>{user.fullName}</p>
@@ -471,7 +471,7 @@ class Sidebar extends Component {
                                 </ul>
                             }
                         </MyLink>
-                        <MyLink
+                        {/* <MyLink
                             to="/job"
                             activeOnlyWhenExact={false}
                             nativeClass="treeview"
@@ -508,7 +508,7 @@ class Sidebar extends Component {
                                     }
                                 </ul>
                             }
-                        </MyLink>
+                        </MyLink> */}
                     </ul>
                     {/* /.sidebar-menu */}
                 </section>

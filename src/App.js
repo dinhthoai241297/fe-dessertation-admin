@@ -4,6 +4,7 @@ import Sidebar from './components/main/Sidebar';
 import Footer from './components/main/Footer';
 import ControlSidebar from './components/main/ControlSidebar';
 import { connect } from 'react-redux';
+import Loading from './components/common/Loading';
 
 class App extends Component {
 
@@ -20,6 +21,7 @@ class App extends Component {
         );
         return (
             <div className="wrapper" >
+                {/* <Loading /> */}
 
                 {this.props.loading &&
                     <div id="my-loading">
